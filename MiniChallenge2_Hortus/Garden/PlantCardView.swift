@@ -16,7 +16,7 @@ class PlantCardView: UIView {
     var plantCardViewCollectionHandler = PlantCardViewCollectionHandler()
     let plantCardCellId: String = "plantCardCellId"
     var context : NSManagedObjectContext?
-    var parentVC: GardenVC?
+    var parentVC: GardenViewController?
     var searchController: UISearchController?
     
     

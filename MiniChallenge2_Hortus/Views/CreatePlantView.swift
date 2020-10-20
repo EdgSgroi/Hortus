@@ -24,7 +24,7 @@ class CreatePlantView: UIView {
     let customHeaderCellId: String = "customHeaderCellId"
     let pickerCellId: String = "pickerCellId"
     let datePickerCellId: String = "datePickerCellId"
-    var parentVC: CreatePlantVC?
+    var parentVC: CreatePlantViewController?
     
     
     override init(frame: CGRect) {

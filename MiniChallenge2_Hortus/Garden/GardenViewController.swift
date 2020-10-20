@@ -1,25 +1,24 @@
 //
-//  GardenVC.swift
+//  PlantViewController.swift
 //  MiniChallenge2_Hortus
 //
 //  Created by Edgar Sgroi on 14/05/19.
 //  Copyright © 2019 Hortus. All rights reserved.
 //
 
-import Foundation
 import UIKit
 import CoreData
 
-class GardenVC : UIViewController, UITextViewDelegate {
-    
+class GardenViewController : UIViewController, UITextViewDelegate, ViewCode {
     
     var context : NSManagedObjectContext?
-    var plantCardView = PlantCardView(frame: .zero)
-    var emptyLabel = UILabel()
-    var cellId: String = "ff"
+    @AutoLayout var plantCardView: PlantCardView
+    @AutoLayout var emptyLabel: UILabel
+    var cellId: String
     var onDoneBlock:(()->Void)?
     
     required init() {
+        cellId = ""
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -31,6 +30,7 @@ class GardenVC : UIViewController, UITextViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        #warning("Coordinator responsability")
         self.plantCardView.plantCardCollectionView.reloadData()
         if #available(iOS 13.0, *) {
             overrideUserInterfaceStyle = .light
@@ -45,13 +45,29 @@ class GardenVC : UIViewController, UITextViewDelegate {
 
         self.view.backgroundColor = .white
         
-        setPlantCardView()
+        setupView()
+        addingEmptyLabel()
+    }
+    
+    func addViewToHierarchy() {
+        plantCardView.parentVC = self
+        self.view.addSubview(plantCardView)
         self.view.addSubview(emptyLabel)
-            
-        emptyLabel.translatesAutoresizingMaskIntoConstraints = false
+    }
+    
+    func setUpConstraints() {
+        let margins = view.safeAreaLayoutGuide
+        plantCardView.topAnchor.constraint(equalToSystemSpacingBelow: margins.topAnchor, multiplier: 2.5).isActive = true
+        plantCardView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 20).isActive = true
+        plantCardView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -20).isActive = true
+        plantCardView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor).isActive = true
+        
         emptyLabel.centerYAnchor.constraint(equalTo: plantCardView.centerYAnchor).isActive = true
         emptyLabel.centerXAnchor.constraint(equalTo: plantCardView.centerXAnchor).isActive = true
         emptyLabel.widthAnchor.constraint(equalToConstant: 300).isActive = true
+    }
+    
+    func setUpAdditionalConfiguration() {
         emptyLabel.adjustsFontForContentSizeCategory = true
         emptyLabel.sizeToFit()
         emptyLabel.numberOfLines = 0
@@ -59,23 +75,6 @@ class GardenVC : UIViewController, UITextViewDelegate {
         emptyLabel.textAlignment = .center
         emptyLabel.textColor = .lightGray
         emptyLabel.font = UIFont.systemFont(ofSize: 17)
-        
-        addingEmptyLabel()
-        
-    }
-    
-
-    
-    func setPlantCardView() {
-        plantCardView.parentVC = self
-        self.view.addSubview(plantCardView)
-        plantCardView.translatesAutoresizingMaskIntoConstraints = false
-        let margins = view.safeAreaLayoutGuide
-        plantCardView.topAnchor.constraint(equalToSystemSpacingBelow: margins.topAnchor, multiplier: 2.5).isActive = true
-        plantCardView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 20).isActive = true
-        plantCardView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -20).isActive = true
-        plantCardView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor).isActive = true
-        
     }
     
     func addingEmptyLabel() {
@@ -87,9 +86,9 @@ class GardenVC : UIViewController, UITextViewDelegate {
         }
     }
     
-    
+    #warning("Coordinator responsability")
     @objc func showsCreatePlantVC(_ sender: Any) {
-        let nextVC = CreatePlantVC()
+        let nextVC = CreatePlantViewController()
         nextVC.onDoneBlock = {
             self.plantCardView.plantCardViewCollectionHandler.reloadPlants()
             self.emptyLabel.isHidden = true

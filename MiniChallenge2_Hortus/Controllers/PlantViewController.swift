@@ -1,5 +1,5 @@
 //
-//  PlantVC.swift
+//  PlantViewController.swift
 //  MiniChallenge2_Hortus
 //
 //  Created by Cassia Aparecida Barbosa on 23/01/20.
@@ -12,15 +12,15 @@ import CoreData
 import Photos
 
 
-class PlantVC: UIViewController {
+class PlantViewController: UIViewController {
     
     var plantImageView = PlantImageView(frame: .zero)
     var plantTasksView =  PlantTasksView(frame: .zero)
-    var parentVC: GardenVC?
+    var parentVC: GardenViewController?
     var plant: Plant?
     var onDoneBlock:(()->Void)?
     
-    required init(parent: GardenVC) {
+    required init(parent: GardenViewController) {
         super.init(nibName: nil, bundle: nil)
         parentVC = parent
     }

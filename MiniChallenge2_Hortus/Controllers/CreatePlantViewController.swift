@@ -1,5 +1,5 @@
 //
-//  CreatePlantVC.swift
+//  PlantViewController.swift
 //  MiniChallenge2_Hortus
 //
 //  Created by Edgar Sgroi on 14/05/19.
@@ -11,7 +11,7 @@ import UIKit
 import CoreData
 import Photos
 
-class CreatePlantVC : UIViewController, UIImagePickerControllerDelegate {
+class CreatePlantViewController : UIViewController, UIImagePickerControllerDelegate {
     
     var context : NSManagedObjectContext?
     var table = CreatePlantView()

@@ -19,7 +19,7 @@ class CreatePlantViewTableHandler: NSObject, UITableViewDelegate, UITableViewDat
     let customHeaderCellId: String = "customHeaderCellId"
     let pickerCellId: String = "pickerCellId"
     let datePickerCellId: String = "datePickerCellId"
-    var controllerVC: GardenVC?
+    var controllerVC: GardenViewController?
     var parentVC: CreatePlantView?
     
     var floweringPickerVisible = false
